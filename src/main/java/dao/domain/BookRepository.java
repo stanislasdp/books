@@ -12,4 +12,6 @@ public interface BookRepository {
 
     void deleteBook(Book book);
 
+    List<Book> searchByProperties(String...properties);
+
 }

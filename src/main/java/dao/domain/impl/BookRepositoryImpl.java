@@ -62,4 +62,11 @@ public class BookRepositoryImpl implements BookRepository {
     public void deleteBook(Book book) {
         sessionFactory.getCurrentSession().delete(book);
     }
+
+    @Override
+    public List<Book> searchByProperties(String... properties) {
+
+        return null;
+    }
+
 }
