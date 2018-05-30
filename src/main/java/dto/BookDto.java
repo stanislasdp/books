@@ -2,11 +2,13 @@ package dto;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
 @Data
-@Builder
+@NoArgsConstructor
 public class BookDto {
 
     private Long id;
@@ -17,7 +19,7 @@ public class BookDto {
 
     private String isbn;
 
-    private LocalDate bookPrintedDate;
+    private LocalDate printedDate;
 
-    private boolean readAlready;
+    private Boolean readAlready;
 }

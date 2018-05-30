@@ -34,25 +34,14 @@ public class BookRepositoryImpl implements BookRepository {
     }
 
     public List<Book> readBooks() {
-
         EntityManager em = sessionFactory.getCurrentSession().getEntityManagerFactory().createEntityManager();
-        CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
-        CriteriaQuery<Long> countQuery = criteriaBuilder.createQuery(Long.class);
-        countQuery.select(criteriaBuilder.count(countQuery.from(Book.class)));
-        Long count = em.createQuery(countQuery).getSingleResult();
 
+        CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
         CriteriaQuery<Book> criteriaQuery = criteriaBuilder.createQuery(Book.class);
         Root<Book> from = criteriaQuery.from(Book.class);
-        CriteriaQuery<Book> select = criteriaQuery.select(from);
-
-        TypedQuery<Book> typedQuery = em.createQuery(select);
-        int pageNumber = 0;
-        while (pageNumber < count.intValue()) {
-            typedQuery.setFirstResult(pageNumber - 1);
-            typedQuery.setMaxResults(PAGE_SIZE);
-            pageNumber += PAGE_SIZE;
-        }
-        return typedQuery.getResultList();
+        CriteriaQuery<Book> all = criteriaQuery.select(from);
+        TypedQuery<Book> allQuery = em.createQuery(all);
+        return allQuery.getResultList();
     }
 
     public void updateBook(Book book) {

@@ -15,6 +15,7 @@ import static java.util.stream.Collectors.toList;
 @Service
 public class BookServiceImpl implements BookService {
 
+
     private BookDtoToBookConverter bookDtoToBookConverter;
 
     private BookToBookDtoConverter bookToBookDtoConverter;
@@ -38,8 +39,8 @@ public class BookServiceImpl implements BookService {
     @Override
     public List<BookDto> listBooks() {
         return bookRepository.readBooks().stream()
-                .map(book -> bookToBookDtoConverter.convert(book))
-                .collect(toList());
+            .map(book -> bookToBookDtoConverter.convert(book))
+            .collect(toList());
     }
 
     @Override
