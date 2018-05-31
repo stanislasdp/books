@@ -15,8 +15,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static java.util.stream.Collectors.toList;
 
@@ -44,7 +43,9 @@ public class BookRepositoryImpl implements BookRepository {
         CriteriaQuery<Book> criteriaQuery = criteriaBuilder.createQuery(Book.class);
         Root<Book> from = criteriaQuery.from(Book.class);
 
-        List<Predicate> predicateList = searchParams.entrySet().stream()
+        List<Predicate> predicateList = Optional.ofNullable(searchParams).orElse(new HashMap<>())
+                .entrySet().stream()
+                .filter(entry -> Objects.nonNull(entry.getValue()))
                 .map(entry -> criteriaBuilder.equal(from.get(entry.getKey()), entry.getValue()))
                 .collect(toList());
 
@@ -75,8 +76,6 @@ public class BookRepositoryImpl implements BookRepository {
 
     @Override
     public List<Book> searchByProperties(String... properties) {
-
         return null;
     }
-
 }
