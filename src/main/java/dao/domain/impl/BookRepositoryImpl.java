@@ -13,14 +13,16 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.List;
+import java.util.Map;
+
+import static java.util.stream.Collectors.toList;
 
 @Repository
 @Transactional
 public class BookRepositoryImpl implements BookRepository {
-
-    private static final int PAGE_SIZE = 10;
 
     private SessionFactory sessionFactory;
 
@@ -34,14 +36,21 @@ public class BookRepositoryImpl implements BookRepository {
         session.save(book);
     }
 
-    public List<Book> readBooks() {
+    public List<Book> readBooks(Map<String,String> searchParams) {
         EntityManager em = sessionFactory.getCurrentSession().getEntityManagerFactory().createEntityManager();
 
         CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+
         CriteriaQuery<Book> criteriaQuery = criteriaBuilder.createQuery(Book.class);
         Root<Book> from = criteriaQuery.from(Book.class);
-        CriteriaQuery<Book> all = criteriaQuery.select(from);
-        TypedQuery<Book> allQuery = em.createQuery(all);
+
+        List<Predicate> predicateList = searchParams.entrySet().stream()
+                .map(entry -> criteriaBuilder.equal(from.get(entry.getKey()), entry.getValue()))
+                .collect(toList());
+
+        TypedQuery<Book> allQuery = em.createQuery(criteriaQuery
+                .select(from)
+                .where(predicateList.toArray(new Predicate[0])));
         return allQuery.getResultList();
     }
 

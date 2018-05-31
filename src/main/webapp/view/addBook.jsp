@@ -12,19 +12,19 @@
  <spring:url value="/addNewBook" var="createUrl"/>
 <form:form action="${createUrl}" method="POST" modelAttribute="book">
 
- <label for="booktitle">Title</>
+ <label for="booktitle">Title</label>
  <form:input type="text" path="title" id="booktitle"/>
 
- <label for="bookauthor">Author</>
+ <label for="bookauthor">Author</label>
  <form:input type="text" path="author" id="bookauthor"/>
 
- <label for="bookisbn">ISBN</>
+ <label for="bookisbn">ISBN<</label>
  <form:input type="text" path="isbn" id="bookisbn"/>
 
-  <label for="bookPrintedDate">Printed date</>
+ <label for="bookPrintedDate">Printed date</label>
   <form:input type="date" path="printedDate" id="bookPrintedDate"/>
 
- <label for="bookChecked">Read?</>
+ <label for="bookChecked">Read?</label>
  <form:checkbox path="readAlready" id="bookChecked"/>
 
  <form><input type="submit"></form>

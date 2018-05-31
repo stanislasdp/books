@@ -1,5 +1,6 @@
 package service.impl;
 
+import controller.BookSearchAttributes;
 import converters.BookDtoToBookConverter;
 import converters.BookToBookDtoConverter;
 import dao.domain.Book;
@@ -38,8 +39,8 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<BookDto> listBooks() {
-        return bookRepository.readBooks().stream()
+    public List<BookDto> listBooksByParams(BookSearchAttributes searchAttributes) {
+        return bookRepository.readBooks(searchAttributes.getSearchParameters()).stream()
             .map(book -> bookToBookDtoConverter.convert(book))
             .collect(toList());
     }
@@ -63,7 +64,6 @@ public class BookServiceImpl implements BookService {
         Book book = bookDtoToBookConverter.convert(bookDto);
         bookRepository.updateBook(book);
     }
-
 
     @Override
     public List<BookDto> searchByProperties(String... properties) {

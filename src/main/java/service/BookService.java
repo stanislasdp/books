@@ -1,6 +1,6 @@
 package service;
 
-import dao.domain.Book;
+import controller.BookSearchAttributes;
 import dto.BookDto;
 
 import java.util.List;
@@ -9,7 +9,7 @@ public interface BookService {
 
     void createBook(BookDto bookDto);
 
-    List<BookDto> listBooks();
+    List<BookDto> listBooksByParams(BookSearchAttributes searchAttributes);
 
     BookDto getBookById(Long id);
 

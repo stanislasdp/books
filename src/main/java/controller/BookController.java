@@ -5,19 +5,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import service.BookService;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
 @Controller
-/*@SessionAttributes("searchParams")*/
+@SessionAttributes("searchAttr")
 public class BookController {
 
     private BookService bookService;
@@ -29,19 +24,20 @@ public class BookController {
 
     @GetMapping(value = "/listBooks")
     public String listBooks(Model model) {
-        model.addAttribute("searchParams", new HashMap<>());
+        model.addAttribute("searchAttr", new BookSearchAttributes());
         return redirectToFirstPage();
     }
 
     @GetMapping(value = "/listBooks/{pageId}")
-    public String listBooks(Model model, @PathVariable(name = "pageId") Integer pageId) {
+    public String listBooks(Model model,
+                            @ModelAttribute("searchAttr") BookSearchAttributes seArchAttributes,
+                            @PathVariable(name = "pageId") Integer pageId) {
         if (pageId < 1) {
             throw new RuntimeException();
         }
-        List<BookDto> books = bookService.listBooks();
+        List<BookDto> books = bookService.listBooksByParams(seArchAttributes);
         PagedListHolder<BookDto> pagedListHolder = new PagedListHolder<>(books);
         pagedListHolder.setPage(pageId - 1);
-        model.addAttribute("searchParams", new HashMap<>());
         model.addAttribute("pageHolder", pagedListHolder);
         return "allBooks";
     }
@@ -60,7 +56,7 @@ public class BookController {
     }
 
     @GetMapping("/getBookForUpdate/{bookId}")
-    public String getBook(@PathVariable("bookId") Long id, Model model)  {
+    public String getBook(@PathVariable("bookId") Long id, Model model) {
         BookDto bookDto = bookService.getBookById(id);
         model.addAttribute("book", bookDto);
         return "updateBook";
@@ -94,5 +90,6 @@ public class BookController {
     private String redirectToFirstPage() {
         return "redirect:/listBooks/1";
     }
+
 
 }
