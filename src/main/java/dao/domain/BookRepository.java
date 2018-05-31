@@ -8,9 +8,11 @@ public interface BookRepository {
 
     List<Book> readBooks();
 
+    Book findById(Long id);
+
     void updateBook(Book book);
 
-    void deleteBook(Book book);
+    void deleteBookById(Long id);
 
     List<Book> searchByProperties(String...properties);
 

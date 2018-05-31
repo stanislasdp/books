@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import service.BookService;
 
 import java.util.List;
+import java.util.Objects;
 
 import static java.util.stream.Collectors.toList;
 
@@ -44,6 +45,13 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public BookDto getBookById(Long id) {
+        Book book = bookRepository.findById(id);
+        Objects.requireNonNull(book);
+        return bookToBookDtoConverter.convert(book);
+    }
+
+    @Override
     public void readBook(BookDto bookDto) {
         Book book = bookDtoToBookConverter.convert(bookDto);
         book.setReadAlready(Boolean.TRUE);
@@ -56,16 +64,16 @@ public class BookServiceImpl implements BookService {
         bookRepository.updateBook(book);
     }
 
-    @Override
-    public void deleteBook(BookDto bookDto) {
-        Book book = bookDtoToBookConverter.convert(bookDto);
-        bookRepository.deleteBook(book);
-    }
 
     @Override
     public List<BookDto> searchByProperties(String... properties) {
        return bookRepository.searchByProperties(properties).stream()
                 .map(book -> bookToBookDtoConverter.convert(book))
                 .collect(toList());
+    }
+
+    @Override
+    public void deleteBook(BookDto bookDto) {
+        bookRepository.deleteBookById(bookDto.getId());
     }
 }

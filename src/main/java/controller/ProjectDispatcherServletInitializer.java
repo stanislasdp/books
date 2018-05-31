@@ -2,7 +2,10 @@ package controller;
 
 import config.DatabaseConfig;
 import config.WebConfig;
+import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
+
+import javax.servlet.Filter;
 
 public class ProjectDispatcherServletInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
@@ -19,5 +22,10 @@ public class ProjectDispatcherServletInitializer extends AbstractAnnotationConfi
     @Override
     protected String[] getServletMappings() {
         return new String[]{"/"};
+    }
+
+    @Override
+    protected Filter[] getServletFilters() {
+        return new Filter[]{new HiddenHttpMethodFilter()};
     }
 }

@@ -4,6 +4,7 @@ import dao.domain.Book;
 import dao.domain.BookRepository;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,12 +45,23 @@ public class BookRepositoryImpl implements BookRepository {
         return allQuery.getResultList();
     }
 
+    @Override
+    public Book findById(Long id) {
+        Session session = sessionFactory.getCurrentSession();
+        return session.get(Book.class, id);
+    }
+
     public void updateBook(Book book) {
         sessionFactory.getCurrentSession().saveOrUpdate(book);
     }
 
-    public void deleteBook(Book book) {
-        sessionFactory.getCurrentSession().delete(book);
+    @Override
+    public void deleteBookById(Long id) {
+       final String hql = "delete from Book where id= :bookId";
+        Query deleteQuery = sessionFactory.getCurrentSession()
+            .createQuery(hql)
+            .setParameter("bookId", id);
+        deleteQuery.executeUpdate();
     }
 
     @Override

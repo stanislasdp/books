@@ -5,13 +5,21 @@
 
 <html>
 <head>
-    <title>List of Bookssss</title>
+    <title>List of Books</title>
 </head>
 <body>
-<table border="1">
+<table border="2">
 
-    <spring:url value="/addBook" var="createUrl"/>
-  <input type="button" onclick="location.href='${createUrl}'" value="Create">
+   <spring:url value="/addBook" var="createUrl"/>
+  <input type="button" onclick="location.href='${createUrl}'" value="Add book">
+
+    <spring:url value="/listBooks/1" var="listUrl"/>
+    <br></br>
+    <form:form action="${listUrl}" method="GET" modelAttribute="searchParams">
+    <input type="text" id="searchByTitle" path="searchParams['title']">
+    <form><input type="submit" value="Apply search params"></form>
+    </form:form>
+
     <table>
         <th>
             Table name is List of books</td>
@@ -19,19 +27,39 @@
         <c:forEach items="${pageHolder.getPageList()}" var="item">
             <tr>
                 <td>
-                    <p>"${item.title}"</p>
+                <p>${item.id}</p>
                 </td>
                 <td>
-                  <p>"${item.author}"</p>
+                 <p>${item.title}</p>
                 </td>
                 <td>
-                  <p>"${item.isbn}"</p>
+                  <p>${item.author}</p>
                 </td>
                 <td>
-                <p>"${item.printedDate}"</p>
+                  <p>${item.isbn}</p>
                 </td>
                 <td>
-                 <p>"${item.readAlready}"</p>
+                <p>${item.printedDate}</p>
+                </td>
+                <td>
+                 <p>${item.readAlready}</p>
+                </td>
+                <td>
+                 <spring:url value="/getBookForUpdate" var="getUrl"/>
+                 <input type="button" onclick="location.href='${getUrl}/${item.id}'" value="Update">
+                </td>
+                <td>
+                <spring:url value="/readBook" var="readUrl"/>
+                 <form:form action="${readUrl}/${item.id}" method="POST">
+                 <input type="submit" value ="Read Book">
+                 </form:form>
+                </td>
+                <td>
+               <spring:url value="/deleteBook" var="delUrl"/>
+                <form:form action="${delUrl}/${item.id}" method="POST">
+                 <input type="hidden" name="_method" value="DELETE" />
+                 <input type="submit" value ="Delete Book">
+                 </form:form>
                 </td>
             </tr>
         </c:forEach>

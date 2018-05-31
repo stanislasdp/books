@@ -14,11 +14,12 @@ public class BookToBookDtoConverter implements Converter<Book, BookDto> {
     @Override
     public BookDto convert(Book source) {
         BookDto bookDto = new BookDto();
+        bookDto.setId(source.getId());
         bookDto.setTitle(source.getTitle());
         bookDto.setAuthor(source.getAuthor());
         bookDto.setIsbn(source.getIsbn());
         bookDto.setPrintedDate(Instant.ofEpochMilli(source.getPrintedDate().getTime()).atZone(ZoneId.systemDefault()).toLocalDate());
-
+        bookDto.setReadAlready(source.isReadAlready());
         return bookDto;
     }
 }

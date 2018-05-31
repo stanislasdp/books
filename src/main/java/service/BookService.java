@@ -1,5 +1,6 @@
 package service;
 
+import dao.domain.Book;
 import dto.BookDto;
 
 import java.util.List;
@@ -10,9 +11,11 @@ public interface BookService {
 
     List<BookDto> listBooks();
 
-    void readBook(BookDto bookDto);
+    BookDto getBookById(Long id);
 
     void updateBook(BookDto bookDto);
+
+    void readBook(BookDto bookDto);
 
     void deleteBook(BookDto bookDto);
 
