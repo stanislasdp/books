@@ -14,15 +14,19 @@
 
  <label for="booktitle">Title</label>
  <form:input type="text" path="title" id="booktitle"/>
+ <form:errors path = "title"/>
 
  <label for="bookauthor">Author</label>
  <form:input type="text" path="author" id="bookauthor"/>
+ <form:errors path = "author"/>
 
  <label for="bookisbn">ISBN<</label>
  <form:input type="text" path="isbn" id="bookisbn"/>
+ <form:errors path = "isbn"/>
 
  <label for="bookPrintedDate">Printed date</label>
   <form:input type="date" path="printedDate" id="bookPrintedDate"/>
+  <form:errors path = "printedDate"/>
 
  <label for="bookChecked">Read?</label>
  <form:checkbox path="readAlready" id="bookChecked"/>

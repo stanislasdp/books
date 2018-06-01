@@ -8,6 +8,7 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -45,8 +46,8 @@ public class BookRepositoryImpl implements BookRepository {
 
         List<Predicate> predicateList = Optional.ofNullable(searchParams).orElse(new HashMap<>())
                 .entrySet().stream()
-                .filter(entry -> Objects.nonNull(entry.getValue()))
-                .map(entry -> criteriaBuilder.equal(from.get(entry.getKey()), entry.getValue()))
+                .filter(entry -> !StringUtils.isEmpty(entry.getValue()))
+                .map(entry ->  criteriaBuilder.like(from.get(entry.getKey()), entry.getValue()))
                 .collect(toList());
 
         TypedQuery<Book> allQuery = em.createQuery(criteriaQuery

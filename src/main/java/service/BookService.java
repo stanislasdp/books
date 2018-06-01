@@ -1,23 +1,23 @@
 package service;
 
 import controller.BookSearchAttributes;
-import dto.BookDto;
+import dto.BookModel;
 
 import java.util.List;
 
 public interface BookService {
 
-    void createBook(BookDto bookDto);
+    void createBook(BookModel bookDto);
 
-    List<BookDto> listBooksByParams(BookSearchAttributes searchAttributes);
+    List<BookModel> listBooksByParams(BookSearchAttributes searchAttributes);
 
-    BookDto getBookById(Long id);
+    BookModel getBookById(Long id);
 
-    void updateBook(BookDto bookDto);
+    void updateBook(BookModel bookDto);
 
-    void readBook(BookDto bookDto);
+    void readBook(BookModel bookDto);
 
-    void deleteBook(BookDto bookDto);
+    void deleteBook(BookModel bookDto);
 
-    List<BookDto> searchByProperties(String...properties);
+    List<BookModel> searchByProperties(String...properties);
 }

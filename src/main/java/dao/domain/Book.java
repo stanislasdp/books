@@ -15,13 +15,13 @@ public class Book {
     @Column(name = "book_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "book_title", nullable = false)
+    @Column(name = "book_title", nullable = false, columnDefinition = "VARCHAR(100)")
     private String title;
 
-    @Column(name = "book_author", nullable = false)
+    @Column(name = "book_author", nullable = false, updatable = false, columnDefinition = "VARCHAR(100)")
     private String author;
 
-    @Column(name = "book_isbn", nullable = false)
+    @Column(name = "book_isbn", nullable = false, columnDefinition = "VARCHAR(20)")
     private String isbn;
 
     @Column(name = "book_printed_date", nullable = false)
@@ -30,5 +30,4 @@ public class Book {
 
     @Column(name = "book_read_already", nullable = false)
     private boolean readAlready;
-
 }

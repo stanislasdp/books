@@ -5,7 +5,7 @@ import converters.BookDtoToBookConverter;
 import converters.BookToBookDtoConverter;
 import dao.domain.Book;
 import dao.domain.BookRepository;
-import dto.BookDto;
+import dto.BookModel;
 import org.springframework.stereotype.Service;
 import service.BookService;
 
@@ -33,47 +33,47 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void createBook(BookDto bookDto) {
+    public void createBook(BookModel bookDto) {
         Book book = bookDtoToBookConverter.convert(bookDto);
         bookRepository.createBook(book);
     }
 
     @Override
-    public List<BookDto> listBooksByParams(BookSearchAttributes searchAttributes) {
+    public List<BookModel> listBooksByParams(BookSearchAttributes searchAttributes) {
         return bookRepository.readBooks(searchAttributes.getSearchParameters()).stream()
             .map(book -> bookToBookDtoConverter.convert(book))
             .collect(toList());
     }
 
     @Override
-    public BookDto getBookById(Long id) {
+    public BookModel getBookById(Long id) {
         Book book = bookRepository.findById(id);
         Objects.requireNonNull(book);
         return bookToBookDtoConverter.convert(book);
     }
 
     @Override
-    public void readBook(BookDto bookDto) {
+    public void readBook(BookModel bookDto) {
         Book book = bookDtoToBookConverter.convert(bookDto);
         book.setReadAlready(Boolean.TRUE);
         bookRepository.updateBook(book);
     }
 
     @Override
-    public void updateBook(BookDto bookDto) {
+    public void updateBook(BookModel bookDto) {
         Book book = bookDtoToBookConverter.convert(bookDto);
         bookRepository.updateBook(book);
     }
 
     @Override
-    public List<BookDto> searchByProperties(String... properties) {
+    public List<BookModel> searchByProperties(String... properties) {
        return bookRepository.searchByProperties(properties).stream()
                 .map(book -> bookToBookDtoConverter.convert(book))
                 .collect(toList());
     }
 
     @Override
-    public void deleteBook(BookDto bookDto) {
+    public void deleteBook(BookModel bookDto) {
         bookRepository.deleteBookById(bookDto.getId());
     }
 }

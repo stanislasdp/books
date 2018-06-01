@@ -1,7 +1,7 @@
 package converters;
 
 import dao.domain.Book;
-import dto.BookDto;
+import dto.BookModel;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
@@ -9,11 +9,11 @@ import java.time.Instant;
 import java.time.ZoneId;
 
 @Component
-public class BookToBookDtoConverter implements Converter<Book, BookDto> {
+public class BookToBookDtoConverter implements Converter<Book, BookModel> {
 
     @Override
-    public BookDto convert(Book source) {
-        BookDto bookDto = new BookDto();
+    public BookModel convert(Book source) {
+        BookModel bookDto = new BookModel();
         bookDto.setId(source.getId());
         bookDto.setTitle(source.getTitle());
         bookDto.setAuthor(source.getAuthor());

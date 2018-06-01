@@ -16,7 +16,7 @@ import java.util.Locale;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = {"service", "converters", "controller"})
+@ComponentScan(basePackages = {"service", "converters", "controller", "exception"})
 public class WebConfig implements WebMvcConfigurer {
 
     @Bean
@@ -43,6 +43,4 @@ public class WebConfig implements WebMvcConfigurer {
             }
         });
     }
-
-
 }
